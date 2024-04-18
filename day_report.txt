@@ -1,4 +1,0 @@
-Storage Number: 11111
-Total Money: -1000
-Storage Number: 55555555
-Total Money: 0
