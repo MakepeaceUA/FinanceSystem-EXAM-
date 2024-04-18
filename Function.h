@@ -107,20 +107,22 @@ void MoneyStorage::AddSpending()
 
 	spend.insert(newSpending);
 
-	ofstream outfile("spending.txt", ios::app); 
+	ofstream outfile("spending.txt"); 
 
 	if (!outfile) 
 	{
-		cout << "Error opening file!\n";
+		cout << "Error!\n";
 		return; 
 	}
+	TotalMoney -= amount;
 
 	for (const auto& spending : spend) 
 	{
 		outfile << "Category:" << spending.GetCategory() << "\n"
 			<< "Total money:" << spending.GetMoney() << "\n"
-			<< "Date:" << spending.GetDate() << "\n";
+			<< "Date:" << spending.GetDate() << "\n\n";
 	}
+
 
 	outfile.close();
 	system("cls");
@@ -151,7 +153,7 @@ void FinanceManagement::Output()
 	system("cls");
 	if (storages.empty())
 	{
-		cout << "Storage does not exist.";
+		cout << "Storage does not exist."; Sleep(1000); system("cls");
 		return;
 	}
 	else
