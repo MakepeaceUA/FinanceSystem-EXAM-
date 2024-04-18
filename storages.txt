@@ -1,9 +1,0 @@
-Storage Number: 1111111
-Total Money: 0
-Credit Limit: 1000
-Storage Number: 5555555
-Total Money: 0
-Credit Limit: 2000
-Storage Number: 1234567
-Total Money: 0
-Credit Limit: 5000
