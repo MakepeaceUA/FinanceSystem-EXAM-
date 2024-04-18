@@ -1,0 +1,12 @@
+Storage Number: 9876543
+Total Money: 500
+Credit Limit: 1000
+
+Storage Number: 1234567
+Total Money: -500
+Credit Limit: 1000
+
+Storage Number: 1357924
+Total Money: 200
+Credit Limit: 1000
+
