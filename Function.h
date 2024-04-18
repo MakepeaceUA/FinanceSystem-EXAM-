@@ -14,14 +14,14 @@ void Menu()
 	int choose;
 	do
 	{
-		cout << "Choose operation:\n";
-		cout << "1 - Create new storage\n";
-		cout << "2 - Top up storage\n";  
-		cout << "3 - Add spending to storage\n";
-		cout << "4 - Storages to file\n";
-		cout << "5 - Delete storage\n";
-		cout << "6 - Output all storages\n";
-		cout << "7 - Exit\n";
+		cout << "Выберите операцию:\n";
+		cout << "1 - Создать новое хранилище\n";
+		cout << "2 - Пополнить счёт\n";  
+		cout << "3 - Снять со счёта(расходы)\n";
+		cout << "4 - Добавить хранилище в файл\n";
+		cout << "5 - Удалить хранилище\n";
+		cout << "6 - Список всех хранилищ\n";
+		cout << "7 - Выход\n";
 		cin >> choose;
 		switch (choose)
 		{
@@ -45,7 +45,7 @@ void Menu()
 			break;
 		case 7:
 			system("cls");
-			cout << "Bye!";
+			cout << "Пока!";
 			break;
 		default:
 			system("cls");
@@ -55,38 +55,38 @@ void Menu()
 
 void Spending::Output() const
 {
-	cout << "Money:" << money << "\n" << "Category:" << category << "\n";
+	cout << "Деньги:" << money << "\n" << "Категория:" << category << "\n";
 }
 void Spending::Input()
 {
-	cout << "Enter money:";
+	cout << "Введите сумму денег:";
 	cin >> money;
-	cout << "Enter category:";
+	cout << "Введите категорию:";
 	cin >> category;
     system("cls");
 }
 
 void Card::Output() 
 {
-	cout << "Bank name:" << BankName << "\n";
+	cout << "Название банка:" << BankName << "\n";
 }
 void Card::Input() 
 {
 	system("cls");
-	cout << "Enter bank name:";
+	cout << "Введите название банка:";
 	cin >> BankName;
 	system("cls");
 }
 void Wallet::Output()
 {
 	system("cls");
-	cout << "Wallet type:" << WalletType << "\n"; Sleep(1000);
+	cout << "Тип кошелька:" << WalletType << "\n"; Sleep(1000);
 	system("cls");
 }
 void Wallet::Input() 
 {
 	system("cls");
-	cout << "Enter wallet type:";
+	cout << "Введите тип кошелька:";
 	cin >> WalletType;
 	system("cls");
 }
@@ -95,11 +95,11 @@ void MoneyStorage::AddSpending()
 {
 	int amount;
 	string category, date;
-	cout << "Enter spending category: ";
+	cout << "Введите категорию расходов: ";
 	cin >> category;
-	cout << "Enter spending amount: ";
+	cout << "Введите сумму расходов: ";
 	cin >> amount;
-	cout << "Enter spending date (dd/mm/yyyy): ";
+	cout << "Введите дату(dd/mm/yyyy): ";
 	cin >> date;
 
 
@@ -111,16 +111,16 @@ void MoneyStorage::AddSpending()
 
 	if (!outfile) 
 	{
-		cout << "Error!\n";
+		cout << "Ошибка!\n";
 		return; 
 	}
 	TotalMoney -= amount;
 
 	for (const auto& spending : spend) 
 	{
-		outfile << "Category:" << spending.GetCategory() << "\n"
-			<< "Total money:" << spending.GetMoney() << "\n"
-			<< "Date:" << spending.GetDate() << "\n\n";
+		outfile << "Категория:" << spending.GetCategory() << "\n"
+			<< "Сумма денег:" << spending.GetMoney() << "\n"
+			<< "Дата:" << spending.GetDate() << "\n\n";
 	}
 
 
@@ -130,20 +130,37 @@ void MoneyStorage::AddSpending()
 }
 void MoneyStorage::Input() 
 {
-	cout << "Enter number: ";
+	cout << "Введите номер хранилиша: ";
 	cin >> number;
-	cout << "Enter total money: ";
+	cout << "Введите сумму денег: ";
 	cin >> TotalMoney;
-	cout << "Enter credit limit: ";
+	cout << "Введите кредитный лимит: ";
 	cin >> CreditLimit;
 }
 void MoneyStorage::TopUp()
 {
+	system("cls");
 	int amount;
-	cout << "Enter amount to top up: ";
-	cin >> amount;
-	TotalMoney += amount;
-	cout << "Amount updated.\n"; Sleep(1000); system("cls");
+	do
+	{
+		cout << "Введите сумму для пополнения: ";
+		cin >> amount;
+		if (TotalMoney + amount > CreditLimit)
+		{
+		    system("cls");
+		}
+		else if(amount == 0) 
+		{
+			system("cls");
+			break;
+		}
+		else 
+		{
+			TotalMoney += amount;
+			cout << "Счёт хранилища обновлён.\n"; Sleep(1000); system("cls");
+			break;
+		}
+	} while (true);
 	return;
 }
 
@@ -153,14 +170,14 @@ void FinanceManagement::Output()
 	system("cls");
 	if (storages.empty())
 	{
-		cout << "Storage does not exist."; Sleep(1000); system("cls");
+		cout << "Хранилище не найдено."; Sleep(1000); system("cls");
 		return;
 	}
 	else
 	{
 		for (auto storage : storages)
 		{
-			cout << "Storage: " << storage->GetNumber() << ", Balance: " << storage->GetTotalMoney() << ", Credit limit: " << storage->GetCreditLimit() << "\n";
+			cout << "Хранилище: " << storage->GetNumber() << ", Баланс: " << storage->GetTotalMoney() << ", Кредитный лимит: " << storage->GetCreditLimit() << "\n";
 		}
 	}
 	Sleep(5000); system("cls");
@@ -169,11 +186,11 @@ void FinanceManagement::DeleteStorage()
 {
 	system("cls");
 	int num;
-	cout << "Enter number storage to delete:";
+	cout << "Введите номер хранилища:";
 	cin >> num;
 	for (auto i = storages.begin(); i != storages.end(); i++)
 	{
-		cout << "Storage delete.\n"; Sleep(1000); system("cls");
+		cout << "Хранилище удалено.\n"; Sleep(1000); system("cls");
         storages.erase(i);
         break;
 	}
@@ -182,22 +199,23 @@ void FinanceManagement::TopUpStorage()
 {
 	system("cls");
 	int number;
-	cout << "Enter storage number to top up:";
+	cout << "Введите номер хранилища:";
 	cin >> number;
 	for (auto storage : storages) 
 	{
-		if (storage->GetNumber() == number) 
+		if (storage->GetNumber() == number)
 		{
 			storage->TopUp();
 		}
+		else
+			system("cls");
 	}
-	cout << "Storage not found.\n";
 }
 void FinanceManagement::AddSpendingToStorage()
 {
 	system("cls");
 	int number;
-	cout << "Enter storage number to add spending:";
+	cout << "Введите номер хранилища:";
 	cin >> number;
 	for (auto storage : storages)
 	{
@@ -205,6 +223,8 @@ void FinanceManagement::AddSpendingToStorage()
 		{
 			storage->AddSpending();
 		}
+		else
+			system("cls");
 	}
 }
 
@@ -214,41 +234,41 @@ void FinanceManagement::WriteStoragesToFile()
 	ofstream outFile("storages.txt");
 	if (!outFile.is_open())
 	{
-		cout << "Error!\n";
+		cout << "Ошибка!\n";
 		return;
 	}
 
 	for (auto storage : storages)
 	{
-		outFile << "Storage Number: " << storage->GetNumber() << "\n";
-		outFile << "Total Money: " << storage->GetTotalMoney() << "\n";
-		outFile << "Credit Limit: " << storage->GetCreditLimit() << "\n\n";
+		outFile << "Номер хранилища: " << storage->GetNumber() << "\n";
+		outFile << "Сумма денег: " << storage->GetTotalMoney() << "\n";
+		outFile << "Кредитный лимит: " << storage->GetCreditLimit() << "\n\n";
 	}
 
-	cout << "Storages written to file successfully.\n"; Sleep(1000); system("cls");
+	cout << "Хранилища добавлены в файл.\n"; Sleep(1000); system("cls");
 	outFile.close();
 }
 void FinanceManagement::CreateStorage()
 {
 	system("cls");
 	int storage, number, CreditLimit;
-	cout << "Select storage:\n";
-	cout << "1. Card\n";
-	cout << "2. Wallet\n";
+	cout << "Выберите хранилище:\n";
+	cout << "1. Карта\n";
+	cout << "2. Кошелёк\n";
 	cin >> storage;
 	system("cls");
-	cout << "Enter number (7 digits): ";
+	cout << "Введите номер хранилища (7 цифр): ";
 	cin >> number;
 	system("cls");
 	if (to_string(number).length() == 7)
 	{
-		cout << "Enter credit limit:";
+		cout << "Введите кредитный лимит:";
 		cin >> CreditLimit;
 
 		if (storage == 1)
 		{
 			Card* newCard = new Card(number, CreditLimit, "");
-			cout << "New card created.\n"; Sleep(1000);
+			cout << "Новая карта создана.\n"; Sleep(1000);
 			newCard->Input();
 			storages.insert(newCard);
 		}
@@ -256,12 +276,12 @@ void FinanceManagement::CreateStorage()
 		{
 			Wallet* newWallet = new Wallet(number, CreditLimit, "");
 			newWallet->Input();
-			cout << "New wallet created.\n"; Sleep(1000);
+			cout << "Новый кошелёк создан.\n"; Sleep(1000);
 			storages.insert(newWallet);
 		}
 		else
 		{
-			cout << "Invalid storage type.\n";
+			cout << "Неверный тип хранилища.\n";
 		}
 		system("cls");
 	}
